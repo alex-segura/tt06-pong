@@ -17,18 +17,18 @@ async def test_blank_interval(dut):
     dut.rst_n.value = 1
     dut._log.info("Test")
     # check display is off during horizontal blanking interval
-    await FallingEdge(dut.uo_out[7])
-    assert dut.uo_out[0] == 0
-    assert dut.uo_out[4] == 0
-    assert dut.uo_out[1] == 0
-    assert dut.uo_out[5] == 0
-    assert dut.uo_out[2] == 0
-    assert dut.uo_out[6] == 0
+    await ClockCycles(dut.clk, 639+18)
+    assert dut.uo_out[0].value == 0
+    assert dut.uo_out[4].value == 0
+    assert dut.uo_out[1].value == 0
+    assert dut.uo_out[5].value == 0
+    assert dut.uo_out[2].value == 0
+    assert dut.uo_out[6].value == 0
     # check display is off during vertical blanking interval
-    await FallingEdge(dut.user_project.vsync)
-    assert dut.uo_out[0] == 0
-    assert dut.uo_out[4] == 0
-    assert dut.uo_out[1] == 0
-    assert dut.uo_out[5] == 0
-    assert dut.uo_out[2] == 0
-    assert dut.uo_out[6] == 0
+    await ClockCycles(dut.clk, 799*479+10)
+    assert dut.uo_out[0].value == 0
+    assert dut.uo_out[4].value == 0
+    assert dut.uo_out[1].value == 0
+    assert dut.uo_out[5].value == 0
+    assert dut.uo_out[2].value == 0
+    assert dut.uo_out[6].value == 0
