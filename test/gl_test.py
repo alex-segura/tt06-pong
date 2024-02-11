@@ -13,9 +13,10 @@ async def test_blank_interval(dut):
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
+    await ClockCycles(dut.clk, 800*525)
     dut.rst_n.value = 1
     dut._log.info("Test")
+    await ClockCycles(dut.clk, 800*525)
     # check display is off during horizontal blanking interval
     await ClockCycles(dut.clk, 639+18)
     assert dut.uo_out[0].value == 0
