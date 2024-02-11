@@ -69,8 +69,8 @@ module pong (
         if (reset) begin
             ball_h_dir = 0;
             ball_v_dir = 0;
-            paddle1_vpos <= 0;
-            paddle2_vpos <= 0;
+            paddle1_vpos <= paddle1_next;
+            paddle2_vpos <= paddle1_next;
             ball_hpos <= ball_h_init;
             ball_vpos <= ball_v_init;
         end else begin
