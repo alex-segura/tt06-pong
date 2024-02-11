@@ -1,6 +1,7 @@
 `default_nettype none
 `timescale 1ns/1ns
 module pong (
+    input wire clk,
     input wire reset,
     input wire vsync,
     input wire [9:0] paddle1_next,
@@ -65,24 +66,43 @@ module pong (
     wire [9:0] ball_h_move = ball_h_dir ? BALL_SPEED : -BALL_SPEED;
     wire [9:0] ball_v_move = ball_v_dir ? BALL_SPEED : -BALL_SPEED;
 
-    always @(posedge vsync) begin
+    reg updated_this_frame;
+
+    always @(posedge clk) begin
         if (reset) begin
-            ball_h_dir = 0;
-            ball_v_dir = 0;
+            ball_h_dir <= 0;
+            ball_v_dir <= 0;
             paddle1_vpos <= paddle1_next;
             paddle2_vpos <= paddle1_next;
             ball_hpos <= ball_h_init;
             ball_vpos <= ball_v_init;
+            updated_this_frame <= 0;
         end else begin
-            if (ball_h_collide || ball_collide_paddle) begin
-                ball_h_dir = ~ball_h_dir;
-            end else if (ball_v_collide) begin
-                ball_v_dir = ~ball_v_dir;
+            if (!vsync) begin
+                if (!updated_this_frame) begin
+                    if (ball_h_collide) begin
+                        ball_h_dir <= ~ball_h_dir;
+                        ball_hpos <= ball_h_init;
+                        ball_vpos <= ball_v_init;
+                    end else if (ball_collide_paddle) begin
+                        ball_h_dir <= ~ball_h_dir;
+                        ball_hpos <= ball_hpos + -ball_h_move;
+                        ball_vpos <= ball_vpos + ball_v_move;
+                    end else if (ball_v_collide) begin
+                        ball_v_dir <= ~ball_v_dir;
+                        ball_hpos <= ball_hpos + ball_h_move;
+                        ball_vpos <= ball_vpos + -ball_v_move;
+                    end else begin
+                        ball_hpos <= ball_hpos + ball_h_move;
+                        ball_vpos <= ball_vpos + ball_v_move;
+                    end
+                    updated_this_frame <= 1;
+                    paddle1_vpos <= paddle1_next;
+                    paddle2_vpos <= paddle2_next;
+                end
+            end else begin
+                updated_this_frame <= 0;
             end
-            paddle1_vpos <= paddle1_next;
-            paddle2_vpos <= paddle2_next;
-            ball_hpos <= ball_h_collide ? ball_h_init : ball_hpos + ball_h_move;
-            ball_vpos <= ball_h_collide ? ball_v_init : ball_vpos + ball_v_move;
         end
     end
 

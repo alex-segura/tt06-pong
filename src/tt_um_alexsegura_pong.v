@@ -28,6 +28,7 @@ module tt_um_alexsegura_pong (
         .sy(vpos),
         .de(de));
     pong pong(
+        .clk(clk),
         .reset(reset),
         .vsync(vsync),
         .hpos(hpos),

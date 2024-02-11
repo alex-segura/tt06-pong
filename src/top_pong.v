@@ -27,6 +27,7 @@ module top_pong #(
         .sy(vpos),
         .de(de));
     pong pong(
+        .clk(clk),
         .reset(sim_rst),
         .vsync(vsync),
         .hpos(hpos),

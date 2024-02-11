@@ -13,7 +13,7 @@ async def test_blank_interval(dut):
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 800*525)
+    await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
     dut._log.info("Test")
     await ClockCycles(dut.clk, 800*525)
