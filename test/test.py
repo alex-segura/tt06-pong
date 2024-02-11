@@ -32,7 +32,7 @@ async def test_paddle_range(dut):
     await enc1.update(1)
 
   # wait for vsync
-  await FallingEdge(dut.user_project.vsync)
+  await RisingEdge(dut.user_project.vsync)
   await FallingEdge(dut.clk)
   assert dut.user_project.pong.paddle1_vpos.value.integer == PADDLE_MAX
   assert dut.user_project.pong.paddle2_vpos.value.integer == PADDLE_MAX
@@ -43,7 +43,7 @@ async def test_paddle_range(dut):
     await enc1.update(-1)
 
   # wait for vsync
-  await FallingEdge(dut.user_project.vsync)
+  await RisingEdge(dut.user_project.vsync)
   await FallingEdge(dut.clk)
   assert dut.user_project.pong.paddle1_vpos.value.integer == 0
   assert dut.user_project.pong.paddle2_vpos.value.integer == 0
