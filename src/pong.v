@@ -69,8 +69,10 @@ module pong (
         if (reset) begin
             ball_h_dir = 0;
             ball_v_dir = 0;
-            paddle1_vpos <= paddle1_next;
-            paddle2_vpos <= paddle2_next;
+            paddle1_vpos <= 0;
+            paddle2_vpos <= 0;
+            ball_hpos <= ball_h_init;
+            ball_vpos <= ball_v_init;
         end else begin
             if (ball_h_collide || ball_collide_paddle) begin
                 ball_h_dir = ~ball_h_dir;

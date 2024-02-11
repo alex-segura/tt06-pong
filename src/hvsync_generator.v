@@ -26,15 +26,16 @@ module hvsync_generator(
     assign de = (sx <= HA_END && sy <= VA_END);
 
     always @(posedge clk) begin
-        if (sx == LINE) begin
-            sx <= 0;
-            sy <= (sy == SCREEN) ? 0 : sy + 1;
-        end else begin
-            sx <= sx + 1;
-        end
         if (reset) begin
             sx <= 0;
             sy <= 0;
+        end else begin
+            if (sx == LINE) begin
+                sx <= 0;
+                sy <= (sy == SCREEN) ? 0 : sy + 1;
+            end else begin
+                sx <= sx + 1;
+            end
         end
     end
 endmodule
