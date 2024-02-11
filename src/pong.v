@@ -65,7 +65,7 @@ module pong (
     wire [9:0] ball_h_move = ball_h_dir ? BALL_SPEED : -BALL_SPEED;
     wire [9:0] ball_v_move = ball_v_dir ? BALL_SPEED : -BALL_SPEED;
 
-    always @(posedge vsync) begin
+    always @(negedge vsync) begin
         if (reset) begin
             ball_h_dir = 0;
             ball_v_dir = 0;
