@@ -9,12 +9,30 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+The pixel clock drives a VGA sync generator that scans the screen. Logic in `pong.v` determines whether to draw a pixel.
+
+At each vsync, collisions are detected and the state of the game is updated.
+
+For the paddle controls, the game uses modified versions of the debounce and encoder logic from the course to generate the control signals.
+
+![screenshot](screen.png)
 
 ## How to test
 
-Explain how to use your project
+Two vertical paddles and a ball should render at 640x480 resolution. A vertical "net" should be visible at the middle of the screen. Paddles should respond to the encoders. The ball should bounce from the top and bottom boundaries of the screen and should bounce off the paddles. The game should reset when the ball crosses beyond either paddle.
+
+The verilog code can be run under verilator simulation:
+
+```shell
+make -B pong
+./obj_dir/pong
+```
+
+SDL2 is a necessary dependency.
+
+W and S control the left paddle. Up and down arrow keys control the right paddle.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+- 2 rotary encoders, one for each paddle.
+- TinyVGA Pmod or similar.
