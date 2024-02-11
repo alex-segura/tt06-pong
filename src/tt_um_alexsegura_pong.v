@@ -11,7 +11,7 @@ module tt_um_alexsegura_pong (
     input  wire       rst_n     // reset_n - low to reset
     );
     wire reset = !rst_n;
-    wire r, g, b;
+    wire pixel;
     wire hsync, vsync, de;
     wire [9:0] hpos;
     wire [9:0] vpos;
@@ -35,15 +35,13 @@ module tt_um_alexsegura_pong (
         .de(de),
         .paddle1_next(paddle1_next),
         .paddle2_next(paddle2_next),
-        .r(r),
-        .g(g),
-        .b(b));
-    assign uo_out[0] = r;
-    assign uo_out[4] = r;
-    assign uo_out[1] = g;
-    assign uo_out[5] = g;
-    assign uo_out[2] = b;
-    assign uo_out[6] = b;
+        .pixel(pixel));
+    assign uo_out[0] = pixel;
+    assign uo_out[4] = pixel;
+    assign uo_out[1] = pixel;
+    assign uo_out[5] = pixel;
+    assign uo_out[2] = pixel;
+    assign uo_out[6] = pixel;
     assign uo_out[3] = vsync;
     assign uo_out[7] = hsync;
     assign uio_out = 0;

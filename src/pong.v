@@ -8,9 +8,7 @@ module pong (
     input wire [9:0] hpos,
     input wire [9:0] vpos,
     input wire de,
-    output wire r,
-    output wire g,
-    output wire b
+    output wire pixel
 );
     localparam BALL_SIZE = 4;
     localparam BALL_SPEED = 4;
@@ -86,7 +84,5 @@ module pong (
         end
     end
 
-    assign r = de && (ball_gfx || paddle1_gfx || paddle2_gfx || net_gfx);
-    assign g = de && (ball_gfx || paddle1_gfx || paddle2_gfx || net_gfx);
-    assign b = de && (ball_gfx || paddle1_gfx || paddle2_gfx || net_gfx);
+    assign pixel = de && (ball_gfx || paddle1_gfx || paddle2_gfx || net_gfx);
 endmodule
