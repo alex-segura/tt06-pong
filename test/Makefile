@@ -19,6 +19,9 @@ SIM_BUILD				= sim_build/rtl
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
 COMPILE_ARGS		+= -I$(SRC_DIR)
 
+# MODULE is the basename of the Python test file
+MODULE = test
+
 else
 
 # Gate level simulation:
@@ -34,14 +37,14 @@ VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_f
 # this gets copied in by the GDS action workflow
 VERILOG_SOURCES += $(PWD)/gate_level_netlist.v
 
+# MODULE is the basename of the Python test file
+MODULE = gl_test
+
 endif
 
 # Include the testbench sources:
 VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
-
-# MODULE is the basename of the Python test file
-MODULE = test
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
